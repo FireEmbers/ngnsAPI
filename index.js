@@ -3,7 +3,7 @@ var getGisMap = require('gisClient');
 var cconv = require('cconv');
 var ignToKml = require('ignMapToKml');
 
-module.exports = function(ignitionPt, U, std, alpha, callback){
+module.exports = function(ignitionPt, U, alpha, callback){
 
   var rows = 50;
   var cols = 50;
@@ -79,22 +79,11 @@ module.exports = function(ignitionPt, U, std, alpha, callback){
   function computeIgnMaps(){
 
 
-    //dataUnits array has 3 sub arrays, each for a different cenario of wind speed
-    //Each data Unit is [% moisture, Wind Speed in m/s, wind direction degrees clockwise from north]
+    //data Unit is [% moisture, Wind Speed in m/s, wind direction degrees clockwise from north]
 
-    Uavg = U;
-    Umax = U*(1+std/100);
-    Umin = (U*(1-std/100) >= 0) ? U*(1-std/100): 0;
-    var dataUnits = [
-      [moisture, Uavg, alpha], //Average speed
-      [moisture, Umin, alpha], //Min speed
-      [moisture, Umax, alpha]  //Max speed
-    ];
+    var dataUnit = [ moisture, U, alpha];
 
-    //This is done in sync
-    for (n = 0; n < dataUnits.length; n++){
-      ignMaps[n] = JSON.parse(Run(dataUnits[n]));
-    }
+    ignMap = JSON.parse(Run(dataUnit));
 
     function Run(dataUnit){
 
@@ -105,34 +94,25 @@ module.exports = function(ignitionPt, U, std, alpha, callback){
   }
 
   function postProcessMaps(){
-    var maps = {
-      'averageCase': ignMaps[0],
-      'bestCase': ignMaps[1], 
-      'worstCase': ignMaps[2],
-      'clc': clcMap
-    }
 
-    var tf = 120;
 
-    var worstCase = ignToKml(maps['worstCase'], tf, ignitionPt, rows, cols, height, width);
-    var bestCase = ignToKml(maps['bestCase'] , tf, ignitionPt, rows, cols, height, width);    
-    var averageCase = ignToKml(maps['averageCase'] , tf, ignitionPt, rows, cols, height, width);
+    var min30 = ignToKml(ignMap, 30, ignitionPt, rows, cols, height, width);
+    var min60 = ignToKml(ignMap, 60, ignitionPt, rows, cols, height, width);
+    var min120 = ignToKml(ignMap, 120, ignitionPt, rows, cols, height, width);
 
     var kmlMaps = {
-      'worstCase': worstCase['kml'],
-      'bestCase': bestCase['kml'],
-      'averageCase': averageCase['kml']
+      'min30': min30['kml'],
+      'min60': min60['kml'],
+      'min120': min120['kml']
     };
 
     var pathArrays = {
-      'worstCase': worstCase['path'],
-      'bestCase': bestCase['path'],
-      'averageCase': averageCase['path']
+      'min30': min30['path'],
+      'min60': min60['path'],
+      'min120': min120['path']
     }
 
     callback(kmlMaps, pathArrays);
   }
-
-
 
 }

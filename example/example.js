@@ -4,10 +4,11 @@
 // 5% moisture
 // forecast for 2h
 
-var embers = require('./../index');
+var embers = require('..');
 var write2D = require('embersutils').write2D;
+var path = require('path');
 
-var embersToNGNS = require('./../../restApi/src/pathToNGNS'); //quick dirty fix. This goes to utils
+var embersToNGNS = require(path.join(__dirname, '../', 'src', 'pathToNGNS'));
 var fs = require('fs');
 
 var ignitionPt = //[ 41 + 47 / 60 + 6.39/3600,- (8 + 8/60 + 26.43/3600)];
@@ -17,17 +18,17 @@ var U = 1;
 var alpha= 135;
 var std = 10;
 
-embers(ignitionPt, U, std, alpha, function(kmlMaps, pathArrays){
+embers(ignitionPt, U, alpha, function(kmlMaps, pathArrays){
   
-  fs.writeFileSync('worstCase.kml', kmlMaps['worstCase'], {encoding: 'utf8'});
-  fs.writeFileSync('bestCase.kml', kmlMaps['bestCase'], {encoding: 'utf8'});
-  fs.writeFileSync('averageCase.kml', kmlMaps['averageCase'], {encoding: 'utf8'});
+  fs.writeFileSync(path.join(__dirname, 'kml' ,'min30.kml'), kmlMaps['min30'], {encoding: 'utf8'});
+  fs.writeFileSync(path.join(__dirname, 'kml' ,'min60.kml'), kmlMaps['min60'], {encoding: 'utf8'});
+  fs.writeFileSync(path.join(__dirname, 'kml' ,'min120.kml'), kmlMaps['min120'], {encoding: 'utf8'});
 
-  writePathArray('worstCaseArray.dat', pathArrays['worstCase']);
-  writePathArray('bestCaseArray.dat', pathArrays['bestCase']);
-  writePathArray('averageCaseArray.dat', pathArrays['averageCase']);
+  writePathArray(path.join(__dirname, 'path' ,'min30.dat'), pathArrays['min30']);
+  writePathArray(path.join(__dirname, 'path' ,'min60.dat'), pathArrays['min60']);
+  writePathArray(path.join(__dirname, 'path' ,'min90.dat'), pathArrays['min120']);
 
-  fs.writeFileSync ('NGNSstring.txt', embersToNGNS(pathArrays), {encoding: 'utf8'});
+  fs.writeFileSync (path.join(__dirname, 'path' ,'NGNSoutput.txt'), embersToNGNS(pathArrays), {encoding: 'utf8'});
 
 });
 
