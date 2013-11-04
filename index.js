@@ -2,7 +2,8 @@ var engine = require('embersengine');
 var getGisMap = require('gisClient');
 var cconv = require('cconv');
 var ignToKml = require('ignMapToKml');
-var embersToNGNS = require(path.join(__dirname, 'src', 'pathToNGNS'));
+var path = require('path');
+var pathToNGNS = require(path.join(__dirname, 'src', 'pathToNGNS'));
 
 module.exports = function(ignitionPt, U, alpha, callback){
 
@@ -113,7 +114,7 @@ module.exports = function(ignitionPt, U, alpha, callback){
       'min120': min120['path']
     }
 
-    callback(kmlMaps, pathArrays);
+    callback(kmlMaps, pathToNGNS(pathArrays));
   }
 
 }
