@@ -1,29 +1,29 @@
 {
   "name": "ngnsAPI",
-  "version": "0.1.0",
-  "description": "Embers demo API",
+  "version": "0.1.1",
+  "description": "",
   "main": "index.js",
+  "directories": {
+    "example": "example"
+  },
+  "dependencies": {
+    "cconv": "https://github.com/FireEmbers/cconv/archive/master.tar.gz",
+    "gisClient": "https://github.com/FireEmbers/gisClient/archive/master.tar.gz",
+    "embersutils": "git://github.com/FireEmbers/utils.git",
+    "ignMapToKml": "git://github.com/FireEmbers/ignToKml.git",
+    "embersengine": "https://github.com/FireEmbers/EmberEngine/archive/master.tar.gz"
+  },
+  "devDependencies": {},
   "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
     "type": "git",
     "url": "git://github.com/FireEmbers/ngnsAPI.git"
   },
-  "keywords": [
-    "embers",
-    "api",
-    "wildfire",
-    "forecast"
-  ],
-  "author": "CrowdProcess",
+  "author": "Flávio Sousa",
   "license": "MIT",
-  "readmeFilename": "Readme.md",
-  "gitHead": "74d4da5cb5b6c75fa8b2a9df70521a9f126a174c",
-  "dependencies": {
-    "gisClient": "https://github.com/FireEmbers/gisclient/archive/master.tar.gz",
-    "embersengine": "https://github.com/FireEmbers/EmberEngine/archive/master.tar.gz",
-    "cconv": "~0.1.0",
-    "embersutils": "https://github.com/FireEmbers/utils/archive/master.tar.gz",
-    "ignMapToKml": "https://github.com/FireEmbers/ignToKml/archive/master.tar.gz"
+  "bugs": {
+    "url": "https://github.com/FireEmbers/ngnsAPI/issues"
   }
 }
