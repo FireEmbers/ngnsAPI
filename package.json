@@ -4,11 +4,10 @@
   "description": "Embers demo API",
   "main": "index.js",
   "scripts": {
-    "test": "tap tests/test*"
   },
   "repository": {
     "type": "git",
-    "url": "git://github.com/FireEmbers/demoAPI.git"
+    "url": "git://github.com/FireEmbers/ngnsAPI.git"
   },
   "keywords": [
     "embers",
