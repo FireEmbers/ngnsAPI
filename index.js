@@ -2,6 +2,7 @@ var engine = require('embersengine');
 var getGisMap = require('gisClient');
 var cconv = require('cconv');
 var ignToKml = require('ignMapToKml');
+var embersToNGNS = require(path.join(__dirname, 'src', 'pathToNGNS'));
 
 module.exports = function(ignitionPt, U, alpha, callback){
 
